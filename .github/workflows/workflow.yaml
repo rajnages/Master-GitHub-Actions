@@ -1,6 +1,11 @@
 name: Second Flow
 
-on: push
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
 
 jobs:
   echo:
@@ -8,3 +13,12 @@ jobs:
     steps:
       - name: Show the Trigger
         run: echo "I have triggered ${{ github.event_name}} event"
+#common types of triggers
+#Common Event Types for Triggers:
+#push – Triggered when code is pushed to a branch or a tag.
+#pull_request – Triggered when a pull request is opened, closed, or synchronized.
+#workflow_dispatch – Manual trigger via the GitHub UI.
+#schedule – Runs workflows on a cron schedule.
+#create – Triggered when a branch or tag is created.
+#delete – Triggered when a branch or tag is deleted.
+#workflow_run – Triggered by the completion of another workflow.
