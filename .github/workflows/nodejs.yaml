@@ -1,13 +1,16 @@
 name: Sample-App
+
 on: push
+
 jobs:
   echo-hello:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
-      - name: first step
-        run: "This is for testing"
+      - name: First Step
+        run: echo "This is for testing"
+
   echo-goodbye:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
-      - name: say goodbye
-        run: "This is second Step"
+      - name: Say Goodbye
+        run: echo "This is the second step"
