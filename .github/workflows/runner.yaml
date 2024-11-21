@@ -4,16 +4,17 @@ on: push
 
 jobs:
   ubuntu-os:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest  # Using the latest Ubuntu runner
     steps:
-      - name: "This job is running on ubuntu server"
+      - name: "This job is running on Ubuntu server"
         run: |
-          echo "this is running on ubuntu server"
-          echo "Runner on $RUNNER_OS"
+          echo "This is running on Ubuntu server"
+          echo "Runner OS is $RUNNER_OS"
+
   windows-os:
-    runs-on: windows:latest
+    runs-on: windows-latest  # Using the latest Windows runner
     steps:
-      - name: "This is running on windows server"
+      - name: "This job is running on Windows server"
         run: |
-          echo "this is running on ubuntu server"
-          echo "Runner on $RUNNER_OS"
+          echo "This is running on Windows server"
+          echo "Runner OS is $RUNNER_OS"
