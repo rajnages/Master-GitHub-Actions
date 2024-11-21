@@ -1,0 +1,19 @@
+name: Workflow Runner
+
+on: push
+
+jobs:
+  ubuntu-os:
+    runs-on: ubuntu:latest
+    steps:
+      - name: "This job is running on ubuntu server"
+        run: |
+          echo "this is running on ubuntu server"
+          echo "Runner on $RUNNER_OS"
+  windows-os:
+    runs-on: windows:latest
+    steps:
+      - name: "This is running on windows server"
+        run: |
+          echo "this is running on ubuntu server"
+          echo "Runner on $RUNNER_OS"
