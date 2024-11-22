@@ -1,0 +1,57 @@
+name: Deploy Node.js App to EC2
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow only for the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 04-using-Actions/react-app
+
+    steps:
+    # Step 1: Check out the code
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+
+    # Step 3: Install dependencies
+    - name: Install Dependencies
+      run: npm install
+
+    # Step 4: Run tests
+    - name: Run Tests
+      run: npm test
+
+    # Step 5: Build the application
+    - name: Build Application
+      run: npm run build
+
+    # Step 6: Deploy to EC2 using SSH
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.EC2_HOST }}           # EC2 public IP address or hostname
+        username: ${{ secrets.EC2_USER }}       # EC2 username (e.g., ubuntu)
+        key: ${{ secrets.EC2_SSH_KEY }}         # Private key for SSH authentication
+        port: 22                                # SSH port
+        script: |
+          # Navigate to the app directory on EC2
+          cd /var/www/nodejs-app
+          # Stop any running application
+          pm2 stop all || true
+          # Remove old files
+          rm -rf *
+          # Copy new files
+          echo "${{ github.workspace }}/build/*" > /var/www/nodejs-app
+          # Install dependencies and restart the app
+          npm install
+          pm2 start app.js
